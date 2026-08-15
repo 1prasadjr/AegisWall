@@ -1,0 +1,39 @@
+name: pif-test
+
+# Ephemeral test stack for CI / local integration + contract tests only (TAS §9.1 stage 7).
+# Never the source of truth for dev/prod data — Neon is (TAS §8, Diagram 5).
+
+services:
+  postgres-test:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: governance_test
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_pass
+    ports:
+      - "5433:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_user -d governance_test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  governance-api-test:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    depends_on:
+      postgres-test:
+        condition: service_healthy
+    env_file:
+      - ../.env.test
+    environment:
+      JWT_PUBLIC_KEY: "-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----"
+      OPA_POLICY_WASM_PATH: ./infra/policy/compiled/policy.wasm
+      LOG_LEVEL: debug
+      HTTP_PORT: 3000
+      NODE_ENV: test
+    volumes:
+      - ../infra/policy/compiled:/workspace/infra/policy/compiled:ro

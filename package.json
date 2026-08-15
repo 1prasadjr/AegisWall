@@ -1,0 +1,33 @@
+{
+  "name": "pif",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.2.0",
+    "@types/pg": "^8.21.0",
+    "@types/supertest": "^7.2.1",
+    "@typescript-eslint/eslint-plugin": "^8.67.0",
+    "@typescript-eslint/parser": "^8.67.0",
+    "@vitest/coverage-v8": "^4.1.10",
+    "dependency-cruiser": "^18.2.0",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^10.8.1",
+    "prettier": "^3.9.6",
+    "supertest": "^7.2.2",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.67.0",
+    "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.2",
+    "jose": "^6.2.8",
+    "pg": "^8.23.0",
+    "pino": "^10.3.1"
+  }
+}

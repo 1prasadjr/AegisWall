@@ -1,0 +1,20 @@
+name: pif-dev
+
+services:
+  governance-api:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    # No local Postgres: Neon is the dev/prod database of record (TAS §8, Diagram 5).
+    # DATABASE_URL comes from the operator's environment (.env.development / .env.production).
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_PUBLIC_KEY: "-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----"
+      OPA_POLICY_WASM_PATH: ./infra/policy/compiled/policy.wasm
+      LOG_LEVEL: debug
+      HTTP_PORT: 3000
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../infra/policy/compiled:/workspace/infra/policy/compiled:ro

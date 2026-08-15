@@ -1,0 +1,67 @@
+# ---------- Dependencies ----------
+node_modules/
+.pnp
+.pnp.js
+*/.pnpm-store/
+
+# ---------- Build / test output ----------
+dist/
+coverage/
+coverage.*/
+*.tsbuildinfo
+.turbo/
+.eslintcache
+.temp/
+
+# ---------- Compiled policy (keep only .gitkeep) ----------
+infra/policy/compiled/*
+!infra/policy/compiled/.gitkeep
+
+# ---------- Environment / secrets ----------
+.env
+.env.development
+.env.test
+.env.production
+.env.local
+.env.*.local
+!.env.example
+
+# ---------- Docs (not to be pushed) ----------
+docs/
+Context.md
+agentignore.md
+docker-ci-setup-guide.md
+role.md
+
+# ---------- Agent / hand-generated files ----------
+Context.png
+.manifest
+.handwritten/
+
+# ---------- Logs / cache ----------
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.npm/
+.yarn/
+
+# ---------- Editors / OS ----------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- Misc ----------
+*.tmp
+*.swp
+*.pem
+*.key
+.openssl/
+.ssh/

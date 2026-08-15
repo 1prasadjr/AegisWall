@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install OPA CLI
+        run: |
+          curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64_static
+          chmod +x ./opa
+          sudo mv ./opa /usr/local/bin/opa
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Type Check
+        run: pnpm exec tsc --noEmit --strict
+
+      - name: Lint
+        run: pnpm exec eslint . && pnpm exec prettier --check .
+
+      - name: Boundary Check
+        run: pnpm exec dependency-cruiser --config infra/dependency-cruiser.config.cjs .
+
+      - name: Rego Validation
+        run: |
+          find . -name "*.rego" -print0 | xargs -0 -r opa check
+          find . -name "*.rego" -print0 | xargs -0 -r opa fmt --diff
+
+      - name: OPA WASM Build
+        run: |
+          # Build WASM artifact from Rego policy (TAS §9.1 Stage 5, Task D)
+          # Entrypoint: governance/policy/judgment (TAS §3.2 RS-6.2)
+          opa build -t wasm -e governance/policy/judgment infra/policy/source/core-mvp-policy.rego
+          tar -xzf bundle.tar.gz
+          mkdir -p infra/policy/compiled
+          mv policy.wasm infra/policy/compiled/policy.wasm
+          rm -rf bundle.tar.gz data.json .manifest
+
+          # Verify WASM artifact was created and is non-empty
+          test -f infra/policy/compiled/policy.wasm
+          test -s infra/policy/compiled/policy.wasm
+          echo "✓ OPA WASM artifact built successfully: $(ls -lh infra/policy/compiled/policy.wasm | awk '{print $5}')"
+
+      - name: Unit Tests
+        run: pnpm exec vitest run --coverage
+
+      - name: Integration / Contract Tests
+        # Test environment only — matches .env.test (TAS §9.1 stage 7). CI is fully
+        # isolated from Neon: it never loads .env.development / .env.production and never
+        # targets the dev or prod database.
+        env:
+          DATABASE_URL: postgres://test_user:test_pass@localhost:5433/governance_test
+        run: |
+          set -euo pipefail
+
+          # Materialize .env.test, which the compose test stack's test-runner reads via
+          # env_file (infra/docker-compose.test.yml). Its value matches the ephemeral
+          # instance started below.
+          echo "DATABASE_URL=${DATABASE_URL}" > .env.test
+
+          # Start the ephemeral test Postgres, published on host port 5433.
+          docker compose -f infra/docker-compose.test.yml up -d --wait postgres-test
+
+          # The ephemeral instance starts empty every run, so re-apply migrations 0001–0005
+          # against it before the suite runs (IS §9.3).
+          for migration in infra/migrations/000*.sql; do
+            psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"
+          done
+
+          pnpm exec vitest run
+
+      - name: Teardown Integration / Contract Test database
+        if: always()
+        run: docker compose -f infra/docker-compose.test.yml down -v
+
+      - name: Build
+        run: |
+          pnpm exec tsup
+          docker build -f infra/Dockerfile -t pif:${{ github.sha }} .
+
+      - name: Publish
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: 'echo "Publish stage placeholder: push the built image to the selected container registry."'

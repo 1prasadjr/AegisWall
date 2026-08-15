@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@gov/shared": ["./packages/shared/src/index.ts"],
+      "@gov/ss1": ["./packages/ss1-trust-qualification/src/index.ts"],
+      "@gov/ss2": ["./packages/ss2-identity-attribution/src/index.ts"],
+      "@gov/ss3": ["./packages/ss3-action-interpretation/src/index.ts"],
+      "@gov/ss4": ["./packages/ss4-authority-lifecycle/src/index.ts"],
+      "@gov/ss5": ["./packages/ss5-policy-definition/src/index.ts"],
+      "@gov/ss6": ["./packages/ss6-policy-evaluation/src/index.ts"],
+      "@gov/ss7": ["./packages/ss7-authorization-mediation/src/index.ts"],
+      "@gov/ss8": ["./packages/ss8-decision-accountability/src/index.ts"],
+      "@gov/persistence": ["./packages/persistence/src/index.ts"],
+      "@gov/policy-engine": ["./packages/policy-engine/src/index.ts"]
+    }
+  }
+}
