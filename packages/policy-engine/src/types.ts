@@ -23,6 +23,7 @@ export interface CompiledPolicy {
  * RuleContent fields mirror @gov/ss5 types.ts (IS §5.5).
  */
 export interface PolicyEvalInput {
+  [key: string]: unknown;
   resolvedAction: {
     target:
       | { determinate: true; value: unknown }
