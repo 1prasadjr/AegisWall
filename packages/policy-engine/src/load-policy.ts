@@ -11,7 +11,9 @@ import type { CompiledPolicy } from "./types";
  * @returns CompiledPolicy ready for evaluation
  * @throws Error if the WASM module fails to load (e.g., invalid format)
  */
-export async function loadCompiledPolicy(wasmBytes: Uint8Array): Promise<CompiledPolicy> {
+export async function loadCompiledPolicy(
+  wasmBytes: Uint8Array,
+): Promise<CompiledPolicy> {
   // Use @open-policy-agent/opa-wasm to load the WASM module (ESM import)
   const { loadPolicy } = await import("@open-policy-agent/opa-wasm");
 
@@ -20,10 +22,12 @@ export async function loadCompiledPolicy(wasmBytes: Uint8Array): Promise<Compile
   const loadedPolicy = await loadPolicy(wasmBytes);
 
   return {
-    evaluate: async (input: Record<string, unknown>): Promise<Record<string, unknown>> => {
+    evaluate: (
+      input: Record<string, unknown>,
+    ): Promise<Record<string, unknown>> => {
       // Evaluate the policy with the input (raw result, mapping happens in evaluate.ts)
-      const result = loadedPolicy.evaluate(input);
-      return result;
+      const result = loadedPolicy.evaluate(input) as Record<string, unknown>;
+      return Promise.resolve(result);
     },
   };
 }

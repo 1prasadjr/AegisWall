@@ -22,7 +22,7 @@ export interface CompiledPolicy {
  * ResolvedAction fields mirror @gov/ss3 types.ts (IS §5.3).
  * RuleContent fields mirror @gov/ss5 types.ts (IS §5.5).
  */
-export type PolicyEvalInput = {
+export interface PolicyEvalInput {
   resolvedAction: {
     target:
       | { determinate: true; value: unknown }
@@ -44,7 +44,7 @@ export type PolicyEvalInput = {
     version: number;
     regoSource: string;
   };
-};
+}
 
 /**
  * Result returned from a successful policy evaluation.
