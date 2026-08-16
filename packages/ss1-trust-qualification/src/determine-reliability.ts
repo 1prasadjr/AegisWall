@@ -1,7 +1,7 @@
 import type { ProvenanceSignalSet, ReliabilityDetermination } from "./types";
 
 export function determineReliability(
-  signals: ProvenanceSignalSet,
+  _signals: ProvenanceSignalSet,
 ): ReliabilityDetermination {
   // TODO: implement
   throw new Error("TODO: implement");

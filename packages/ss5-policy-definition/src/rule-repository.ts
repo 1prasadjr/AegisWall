@@ -3,14 +3,14 @@ import type { NormalizedRuleRequest, RuleContent } from "./types";
 import type { Ss5Failure } from "./errors";
 
 export function writeRule(
-  request: NormalizedRuleRequest,
+  _request: NormalizedRuleRequest,
 ): Promise<Result<{ ruleId: Uuid; version: number }, Ss5Failure>> {
   // TODO: implement
   throw new Error("TODO: implement");
 }
 
 export function readRule(
-  category: string,
+  _category: string,
 ): Promise<RuleContent | "no_applicable_rule"> {
   // TODO: implement
   throw new Error("TODO: implement");

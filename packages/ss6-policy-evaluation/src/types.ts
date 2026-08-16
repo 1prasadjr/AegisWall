@@ -1,18 +1,18 @@
 import type { ResolvedAction } from "@gov/ss3";
 import type { RuleContent } from "@gov/ss5";
 
-export type BoundAssessment = {
+export interface BoundAssessment {
   resolvedAction: ResolvedAction;
   ruleContent: RuleContent;
-};
+}
 
-export type RawMatchResult = {
+export interface RawMatchResult {
   matched: boolean;
   matchedRuleVersion: number;
   parametersEvaluated: true;
-};
+}
 
-export type PolicyJudgment = {
+export interface PolicyJudgment {
   outcome: "auto_permit" | "auto_deny" | "inconclusive";
   basis: RawMatchResult | "assessment_blocked" | "inconclusive";
-};
+}

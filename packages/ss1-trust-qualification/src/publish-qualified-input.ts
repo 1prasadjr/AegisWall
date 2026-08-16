@@ -5,8 +5,8 @@ import type {
 } from "./types";
 
 export function publishQualifiedInput(
-  record: NormalizedInput,
-  determination: ReliabilityDetermination,
+  _record: NormalizedInput,
+  _determination: ReliabilityDetermination,
 ): QualifiedInput {
   // TODO: implement
   throw new Error("TODO: implement");

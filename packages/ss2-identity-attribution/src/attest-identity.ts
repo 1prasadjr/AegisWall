@@ -3,7 +3,7 @@ import type { Ss2Failure } from "./errors";
 import type { AttestedIdentity, IdentityRef } from "./types";
 
 export function attestIdentity(
-  ref: IdentityRef,
+  _ref: IdentityRef,
 ): Promise<Result<AttestedIdentity, Ss2Failure>> {
   // TODO: implement
   throw new Error("TODO: implement");

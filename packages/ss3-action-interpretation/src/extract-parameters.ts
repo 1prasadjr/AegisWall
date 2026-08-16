@@ -3,7 +3,7 @@ import type { BoundProposal, ResolvedParameters } from "./types";
 import type { Ss3Failure } from "./errors";
 
 export function extractParameters(
-  proposal: BoundProposal,
+  _proposal: BoundProposal,
 ): Result<ResolvedParameters, Ss3Failure> {
   // TODO: implement
   throw new Error("TODO: implement");

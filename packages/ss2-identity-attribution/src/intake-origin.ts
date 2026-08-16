@@ -4,7 +4,7 @@ import type { OriginInput, OriginRecord } from "./types";
 
 // EXTENSION POINT: Provenance Linking, Deferred MVP — do not implement
 export function intakeOrigin(
-  origin: OriginInput,
+  _origin: OriginInput,
 ): Result<OriginRecord, Ss2Failure> {
   // TODO: implement
   throw new Error("TODO: implement");

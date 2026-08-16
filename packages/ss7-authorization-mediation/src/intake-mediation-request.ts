@@ -3,8 +3,8 @@ import type { AdmittedRequest } from "./types";
 import type { ResolvedAction } from "@gov/ss3";
 
 export function intakeMediationRequest(
-  resolvedAction: ResolvedAction,
-  identity: IdentityRef,
+  _resolvedAction: ResolvedAction,
+  _identity: IdentityRef,
 ): AdmittedRequest {
   // TODO: implement
   throw new Error("TODO: implement");

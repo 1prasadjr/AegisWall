@@ -6,9 +6,9 @@ import type {
 } from "./types";
 
 export function composeDecision(
-  request: AdmittedRequest,
-  authority: AuthorityContext,
-  policy: PolicyContext,
+  _request: AdmittedRequest,
+  _authority: AuthorityContext,
+  _policy: PolicyContext,
 ): CandidateDecision {
   // TODO: implement
   throw new Error("TODO: implement");

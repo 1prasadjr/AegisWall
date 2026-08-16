@@ -7,10 +7,10 @@ import type {
 } from "./types";
 
 export function publishResolvedAction(
-  target: ResolvedTarget,
-  parameters: ResolvedParameters,
-  scope: ResolvedScope,
-  identity: AttestedIdentity,
+  _target: ResolvedTarget,
+  _parameters: ResolvedParameters,
+  _scope: ResolvedScope,
+  _identity: AttestedIdentity,
 ): Promise<Decision> {
   // TODO: implement
   throw new Error("TODO: implement");

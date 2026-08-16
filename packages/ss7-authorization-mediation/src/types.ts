@@ -3,28 +3,28 @@ import type { CurrentAuthorityState } from "@gov/ss4";
 import type { PolicyJudgment } from "@gov/ss6";
 import type { ResolvedAction } from "@gov/ss3";
 
-export type AdmittedRequest = {
+export interface AdmittedRequest {
   resolvedAction: ResolvedAction;
   identity: IdentityRef;
   admittedAt: string;
-};
+}
 
-export type AuthorityContext = {
+export interface AuthorityContext {
   state: CurrentAuthorityState | "empty";
-};
+}
 
-export type PolicyContext = {
+export interface PolicyContext {
   judgment: PolicyJudgment;
-};
+}
 
-export type CandidateDecision = {
+export interface CandidateDecision {
   outcome: "permit" | "deny" | "modify";
   reason: string;
-};
+}
 
-export type Decision = {
+export interface Decision {
   outcome: "permit" | "deny" | "modify";
   reason: string;
   decisionId: Uuid;
   decidedAt: string;
-};
+}

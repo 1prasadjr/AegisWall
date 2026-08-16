@@ -6,9 +6,9 @@ import type { ProposedActionInput } from "./types";
 import type { Ss3Failure, Ss7ForwardedFailure } from "./errors";
 
 export function submitAction(
-  proposal: ProposedActionInput,
-  qualifiedInput: QualifiedInput,
-  identity: AttestedIdentity,
+  _proposal: ProposedActionInput,
+  _qualifiedInput: QualifiedInput,
+  _identity: AttestedIdentity,
 ): Promise<Result<Decision, Ss3Failure | Ss7ForwardedFailure>> {
   // TODO: implement
   throw new Error("TODO: implement");

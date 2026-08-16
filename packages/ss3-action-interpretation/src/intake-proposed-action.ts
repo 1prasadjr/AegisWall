@@ -5,9 +5,9 @@ import type { BoundProposal, ProposedActionInput } from "./types";
 import type { Ss3Failure } from "./errors";
 
 export function intakeProposedAction(
-  proposal: ProposedActionInput,
-  qualifiedInput: QualifiedInput,
-  identity: AttestedIdentity,
+  _proposal: ProposedActionInput,
+  _qualifiedInput: QualifiedInput,
+  _identity: AttestedIdentity,
 ): Result<BoundProposal, Ss3Failure> {
   // TODO: implement
   throw new Error("TODO: implement");

@@ -1,16 +1,16 @@
-export type RuleAuthoringInput = {
+export interface RuleAuthoringInput {
   category: string;
   regoSource: string;
   authoredBy: string;
-};
+}
 
-export type NormalizedRuleRequest = {
+export interface NormalizedRuleRequest {
   category: string;
   regoSource: string;
-};
+}
 
-export type RuleContent = {
+export interface RuleContent {
   category: string;
   version: number;
   regoSource: string;
-};
+}

@@ -1,25 +1,25 @@
-import type { IdentityRef, Uuid } from "@gov/shared";
+import type { Uuid } from "@gov/shared";
 
-export type OriginInput = {
+export interface OriginInput {
   assertion: string;
   requestedAt: string;
-};
+}
 
-export type OriginRecord = {
+export interface OriginRecord {
   subject: string;
   issuer: string;
   verifiedAt: string;
-};
+}
 
-export type IdentityIssuanceEvent = {
+export interface IdentityIssuanceEvent {
   originRecord: OriginRecord;
   issuedAt: string;
-};
+}
 
-export type AttestedIdentity = {
+export interface AttestedIdentity {
   identityId: Uuid;
   originReference: OriginRecord;
   issuedAt: string;
-};
+}
 
-export type { IdentityRef } from "@gov/shared";
+export type { IdentityRef as _IdentityRef } from "@gov/shared";

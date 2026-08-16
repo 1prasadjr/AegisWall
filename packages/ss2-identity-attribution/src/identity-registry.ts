@@ -7,14 +7,14 @@ import type {
 } from "./types";
 
 export function writeIdentity(
-  event: IdentityIssuanceEvent,
+  _event: IdentityIssuanceEvent,
 ): Promise<Result<IdentityRef, Ss2Failure>> {
   // TODO: implement
   throw new Error("TODO: implement");
 }
 
 export function readIdentity(
-  ref: IdentityRef,
+  _ref: IdentityRef,
 ): Promise<Result<AttestedIdentity, Ss2Failure>> {
   // TODO: implement
   throw new Error("TODO: implement");
