@@ -1,5 +1,12 @@
-import { pgTable, uuid, jsonb, timestamp, text, index } from 'drizzle-orm/pg-core';
-import { identities } from './identities.js';
+import {
+  pgTable,
+  uuid,
+  jsonb,
+  timestamp,
+  text,
+  index,
+} from "drizzle-orm/pg-core";
+import { identities } from "./identities.js";
 
 /**
  * RS-4.3 Current Authority Ledger — append-only event log
@@ -14,17 +21,22 @@ import { identities } from './identities.js';
  * before appending (RD6/RD7 per-Identity serialization).
  */
 export const authorityEvents = pgTable(
-  'authority_events',
+  "authority_events",
   {
-    eventId: uuid('event_id').primaryKey().defaultRandom(),
-    identityId: uuid('identity_id')
+    eventId: uuid("event_id").primaryKey().defaultRandom(),
+    identityId: uuid("identity_id")
       .notNull()
       .references(() => identities.identityId),
-    eventType: text('event_type', { enum: ['issue', 'withdraw'] }).notNull(),
-    scope: jsonb('scope').notNull(),
-    occurredAt: timestamp('occurred_at', { withTimezone: true }).notNull().defaultNow(),
+    eventType: text("event_type", { enum: ["issue", "withdraw"] }).notNull(),
+    scope: jsonb("scope").notNull(),
+    occurredAt: timestamp("occurred_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
   },
   (table) => ({
-    identityIdx: index('authority_events_identity_idx').on(table.identityId, table.occurredAt),
-  })
+    identityIdx: index("authority_events_identity_idx").on(
+      table.identityId,
+      table.occurredAt,
+    ),
+  }),
 );

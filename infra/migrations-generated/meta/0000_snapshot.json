@@ -69,12 +69,8 @@
           "name": "authority_events_identity_id_identities_identity_id_fk",
           "tableFrom": "authority_events",
           "tableTo": "identities",
-          "columnsFrom": [
-            "identity_id"
-          ],
-          "columnsTo": [
-            "identity_id"
-          ],
+          "columnsFrom": ["identity_id"],
+          "columnsTo": ["identity_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -145,12 +141,8 @@
           "name": "decision_records_identity_id_identities_identity_id_fk",
           "tableFrom": "decision_records",
           "tableTo": "identities",
-          "columnsFrom": [
-            "identity_id"
-          ],
-          "columnsTo": [
-            "identity_id"
-          ],
+          "columnsFrom": ["identity_id"],
+          "columnsTo": ["identity_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -238,10 +230,7 @@
         "policy_rules_category_version_key": {
           "name": "policy_rules_category_version_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "category",
-            "version"
-          ]
+          "columns": ["category", "version"]
         }
       },
       "policies": {},

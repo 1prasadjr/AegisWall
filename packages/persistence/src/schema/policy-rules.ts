@@ -1,4 +1,11 @@
-import { pgTable, uuid, text, integer, timestamp, unique } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  uuid,
+  text,
+  integer,
+  timestamp,
+  unique,
+} from "drizzle-orm/pg-core";
 
 /**
  * RS-5.3 Rule Repository — append-only, versioned
@@ -12,18 +19,20 @@ import { pgTable, uuid, text, integer, timestamp, unique } from 'drizzle-orm/pg-
  * never an UPDATE.
  */
 export const policyRules = pgTable(
-  'policy_rules',
+  "policy_rules",
   {
-    ruleId: uuid('rule_id').primaryKey().defaultRandom(),
-    category: text('category').notNull(),
-    version: integer('version').notNull(),
-    regoSource: text('rego_source').notNull(),
-    authoredAt: timestamp('authored_at', { withTimezone: true }).notNull().defaultNow(),
+    ruleId: uuid("rule_id").primaryKey().defaultRandom(),
+    category: text("category").notNull(),
+    version: integer("version").notNull(),
+    regoSource: text("rego_source").notNull(),
+    authoredAt: timestamp("authored_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
   },
   (table) => ({
-    categoryVersionUnique: unique('policy_rules_category_version_key').on(
+    categoryVersionUnique: unique("policy_rules_category_version_key").on(
       table.category,
-      table.version
+      table.version,
     ),
-  })
+  }),
 );

@@ -38,6 +38,7 @@ Context.png
 .manifest
 .handwritten/
 
+
 # ---------- Logs / cache ----------
 logs/
 *.log

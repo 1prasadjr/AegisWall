@@ -1,5 +1,12 @@
-import { pgTable, uuid, jsonb, timestamp, text, boolean } from 'drizzle-orm/pg-core';
-import { identities } from './identities.js';
+import {
+  pgTable,
+  uuid,
+  jsonb,
+  timestamp,
+  text,
+  boolean,
+} from "drizzle-orm/pg-core";
+import { identities } from "./identities.js";
 
 /**
  * RS-8.3 Decision Record Store — append-only, the durable trace of every Decision
@@ -18,13 +25,15 @@ import { identities } from './identities.js';
  *
  * These are independent, orthogonal flags (IS §9.2).
  */
-export const decisionRecords = pgTable('decision_records', {
-  decisionId: uuid('decision_id').primaryKey(),
-  identityId: uuid('identity_id').references(() => identities.identityId),
-  resolvedAction: jsonb('resolved_action').notNull(),
-  authorityContext: jsonb('authority_context').notNull(),
-  policyJudgment: jsonb('policy_judgment').notNull(),
-  outcome: text('outcome', { enum: ['permit', 'deny', 'modify'] }).notNull(),
-  complete: boolean('complete').notNull(),
-  decidedAt: timestamp('decided_at', { withTimezone: true }).notNull().defaultNow(),
+export const decisionRecords = pgTable("decision_records", {
+  decisionId: uuid("decision_id").primaryKey(),
+  identityId: uuid("identity_id").references(() => identities.identityId),
+  resolvedAction: jsonb("resolved_action").notNull(),
+  authorityContext: jsonb("authority_context").notNull(),
+  policyJudgment: jsonb("policy_judgment").notNull(),
+  outcome: text("outcome", { enum: ["permit", "deny", "modify"] }).notNull(),
+  complete: boolean("complete").notNull(),
+  decidedAt: timestamp("decided_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });

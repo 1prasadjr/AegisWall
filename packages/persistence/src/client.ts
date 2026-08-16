@@ -1,6 +1,6 @@
-import pg from 'pg';
-import { drizzle, type NodePgDatabase } from 'drizzle-orm/node-postgres';
-import * as schemaImport from './schema/index.js';
+import pg from "pg";
+import { drizzle, type NodePgDatabase } from "drizzle-orm/node-postgres";
+import * as schemaImport from "./schema/index.js";
 
 /**
  * PostgresClient: thin wrapper around pg.Pool + Drizzle ORM instance.
