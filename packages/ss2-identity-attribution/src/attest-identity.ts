@@ -1,10 +1,11 @@
 import type { Result } from "@gov/shared";
-import type { Ss2Failure } from "./errors";
-import type { AttestedIdentity, IdentityRef } from "./types";
+import type { Ss2Failure } from "./errors.js";
+import type { AttestedIdentity, IdentityRef } from "./types.js";
+import { readIdentity } from "./identity-registry.js";
 
-export function attestIdentity(
-  _ref: IdentityRef,
+export async function attestIdentity(
+  ref: IdentityRef,
 ): Promise<Result<AttestedIdentity, Ss2Failure>> {
-  // TODO: implement
-  throw new Error("TODO: implement");
+  // Public read path: delegates to readIdentity only
+  return readIdentity(ref);
 }

@@ -2,12 +2,22 @@ import type {
   NormalizedInput,
   QualifiedInput,
   ReliabilityDetermination,
-} from "./types";
+} from "./types.js";
 
+/**
+ * Assembles the final QualifiedInput from a normalised record and the
+ * reliability determination produced by determineReliability.
+ *
+ * The determination is passed through unmodified — this function never
+ * re-evaluates or overrides it.
+ */
 export function publishQualifiedInput(
-  _record: NormalizedInput,
-  _determination: ReliabilityDetermination,
+  record: NormalizedInput,
+  determination: ReliabilityDetermination,
 ): QualifiedInput {
-  // TODO: implement
-  throw new Error("TODO: implement");
+  return {
+    content: record.content,
+    determination,
+    qualifiedAt: new Date().toISOString(),
+  };
 }

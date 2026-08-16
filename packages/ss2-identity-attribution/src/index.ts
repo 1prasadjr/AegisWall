@@ -1,11 +1,11 @@
 /** SS-2 public surface. */
-export { establishIdentity } from "./establish-identity";
-export { attestIdentity } from "./attest-identity";
+export { establishIdentity } from "./establish-identity.js";
+export { attestIdentity } from "./attest-identity.js";
 export type {
   OriginInput,
   OriginRecord,
   IdentityIssuanceEvent,
   AttestedIdentity,
   IdentityRef,
-} from "./types";
-export type { Ss2Failure } from "./errors";
+} from "./types.js";
+export type { Ss2Failure } from "./errors.js";

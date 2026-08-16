@@ -63,7 +63,7 @@ jobs:
         # isolated from Neon: it never loads .env.development / .env.production and never
         # targets the dev or prod database.
         env:
-          DATABASE_URL: postgres://test_user:test_pass@localhost:5433/governance_test
+          DATABASE_URL: postgresql://test_user:test_pass@localhost:5433/governance_test
         run: |
           set -euo pipefail
 

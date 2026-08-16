@@ -2,6 +2,20 @@ name: pif-test
 
 # Ephemeral test stack for CI / local integration + contract tests only (TAS §9.1 stage 7).
 # Never the source of truth for dev/prod data — Neon is (TAS §8, Diagram 5).
+#
+# Run sequence (SS-2 contract tests, Item A.5):
+#   1. docker compose -f infra/docker-compose.test.yml up -d postgres-test
+#      (brings up the disposable Postgres on host port 5433,
+#       NOT the developer default 5432.)
+#      On first init, the official postgres image automatically applies every
+#      *.sql under /docker-entrypoint-initdb.d — that is how
+#      infra/migrations/0001_identities.sql reaches the test database
+#      without a separate migration step.
+#   2. export DATABASE_URL=postgresql://test_user:test_pass@localhost:5433/governance_test
+#   3. pnpm --filter @gov/ss2 test
+#      With the stack up the DB-dependent tests must PASS for real
+#      (round-trip against an ephemeral DB). With the stack down they
+#      must FAIL loudly (see packages/ss2-identity-attribution/src/identity-registry.test.ts).
 
 services:
   postgres-test:
@@ -11,9 +25,19 @@ services:
       POSTGRES_USER: test_user
       POSTGRES_PASSWORD: test_pass
     ports:
+      # Host port 5433 is mapped to container port 5432 deliberately:
+      # we must avoid the developer's local Postgres default (5432) on
+      # shared workstations. 5433 is the public test contract.
       - "5433:5432"
     tmpfs:
       - /var/lib/postgresql/data
+    volumes:
+      # The postgres image runs /docker-entrypoint-initdb.d/*.sql on first init
+      # (alphabetical order), so mounting infra/migrations here guarantees the
+      # identities table exists before any test connects. The SS-2-only SS-2
+      # migration file is the only one mounted; we deliberately do NOT mount
+      # 0002..0005 to keep this stack scoped to Task J / @gov/ss2 (per Context).
+      - ../infra/migrations:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U test_user -d governance_test"]
       interval: 10s

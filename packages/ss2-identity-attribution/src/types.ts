@@ -22,4 +22,4 @@ export interface AttestedIdentity {
   issuedAt: string;
 }
 
-export type { IdentityRef as _IdentityRef } from "@gov/shared";
+export type { IdentityRef } from "@gov/shared";
