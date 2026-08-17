@@ -109,6 +109,18 @@ importers:
 
   packages/ss2-identity-attribution: {}
 
+  packages/ss5-policy-definition:
+    dependencies:
+      '@gov/persistence':
+        specifier: workspace:*
+        version: link:../persistence
+      '@gov/policy-engine':
+        specifier: workspace:*
+        version: link:../policy-engine
+      '@gov/shared':
+        specifier: workspace:*
+        version: link:../shared
+
 packages:
 
   '@babel/helper-string-parser@7.29.7':

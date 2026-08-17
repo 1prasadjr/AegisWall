@@ -32,32 +32,14 @@ services:
     tmpfs:
       - /var/lib/postgresql/data
     volumes:
-      # The postgres image runs /docker-entrypoint-initdb.d/*.sql on first init
-      # (alphabetical order), so mounting infra/migrations here guarantees the
-      # identities table exists before any test connects. The SS-2-only SS-2
-      # migration file is the only one mounted; we deliberately do NOT mount
-      # 0002..0005 to keep this stack scoped to Task J / @gov/ss2 (per Context).
+      # Shared ephemeral test stack for all packages (not SS-2-only).
+      # The full infra/migrations directory is mounted; the postgres image
+      # runs /docker-entrypoint-initdb.d/*.sql on first init in alphabetical
+      # order, so all five migration files (0001..0005) apply to the test
+      # database.
       - ../infra/migrations:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U test_user -d governance_test"]
       interval: 10s
       timeout: 5s
       retries: 5
-
-  governance-api-test:
-    build:
-      context: ..
-      dockerfile: infra/Dockerfile
-    depends_on:
-      postgres-test:
-        condition: service_healthy
-    env_file:
-      - ../.env.test
-    environment:
-      JWT_PUBLIC_KEY: "-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----"
-      OPA_POLICY_WASM_PATH: ./infra/policy/compiled/policy.wasm
-      LOG_LEVEL: debug
-      HTTP_PORT: 3000
-      NODE_ENV: test
-    volumes:
-      - ../infra/policy/compiled:/workspace/infra/policy/compiled:ro
